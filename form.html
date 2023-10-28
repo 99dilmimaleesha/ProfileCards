@@ -53,12 +53,29 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        .upload-button {
+            display: none;
+        }
+        .upload-label {
+            display: inline-block;
+            background-color: #00d2d3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="card">
         <h2>Profile Card Builder</h2>
         <form id="profileForm">
+            <div>
+                <label class="form-label" for="photo">Upload Photo or Avatar:</label>
+                <input type="file" class="upload-button" id="photo" accept="image/*">
+                <label class="upload-label" for="photo">Choose a File</label>
+            </div>
             <div>
                 <label class="form-label" for="name">Name:</label>
                 <input class="form-input" type="text" id="name" placeholder="Your Name" required>
@@ -111,6 +128,17 @@
             document.getElementById('portfolioLink').href = portfolioLink;
             document.getElementById('linkedinLink').href = linkedinLink;
         }
+
+        // Initialize the file input and show the selected file name
+        const uploadInput = document.getElementById('photo');
+        const uploadLabel = document.querySelector('.upload-label');
+        uploadInput.addEventListener('change', function () {
+            if (uploadInput.files.length > 0) {
+                uploadLabel.textContent = uploadInput.files[0].name;
+            } else {
+                uploadLabel.textContent = 'Choose a File';
+            }
+        });
 
         // Initial update
         updateCard();
