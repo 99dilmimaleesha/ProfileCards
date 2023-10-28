@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Card Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #00d2d3, #3a7bd5);
+        }
+        .card {
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .profile-pic {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .social-icons {
+            display: flex;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #333;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img class="profile-pic" id="profilePic" src="default-profile-pic.jpg" alt="Profile Picture">
+        <h2 id="name">Your Name</h2>
+        <p id="email">youremail@example.com</p>
+        <p id="caption">Your Caption</p>
+        <div class="social-icons">
+            <a id="instagramLink" href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            <a id="twitterLink" href="#"><i class="fab fa-twitter"></i> Twitter</a>
+            <a id="githubLink" href="#"><i class="fab fa-github"></i> GitHub</a>
+            <a id="portfolioLink" href="#"><i class="fas fa-globe"></i> Portfolio</a>
+            <a id="linkedinLink" href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        </div>
+        <button id="downloadButton">Download Card</button>
+    </div>
+
+    <script>
+        // Function to update the card content
+        function updateCard() {
+            const name = document.getElementById('name').textContent;
+            const email = document.getElementById('email').textContent;
+            const caption = document.getElementById('caption').textContent;
+            const instagramLink = document.getElementById('instagramLink').href;
+            const twitterLink = document.getElementById('twitterLink').href;
+            const githubLink = document.getElementById('githubLink').href;
+            const portfolioLink = document.getElementById('portfolioLink').href;
+            const linkedinLink = document.getElementById('linkedinLink').href;
+            const profilePic = document.getElementById('profilePic').src;
+
+            // You can customize the card content and appearance here
+
+            // For dynamic gradient background, you can use JavaScript to change the background:
+            const card = document.querySelector('.card');
+            const gradientColors = ['#00d2d3', '#3a7bd5'];
+            const randomColor1 = gradientColors[Math.floor(Math.random() * gradientColors.length)];
+            const randomColor2 = gradientColors[Math.floor(Math.random() * gradientColors.length)];
+            card.style.background = `linear-gradient(to right, ${randomColor1}, ${randomColor2})`;
+        }
+
+        // Initial update
+        updateCard();
+
+        // Download card functionality
+        const downloadButton = document.getElementById('downloadButton');
+        downloadButton.addEventListener('click', () => {
+            const card = document.querySelector('.card');
+            const cardClone = card.cloneNode(true);
+            const cardContainer = document.createElement('div');
+            cardContainer.appendChild(cardClone);
+
+            // Create a Blob containing the card as an HTML string
+            const cardHTML = cardContainer.innerHTML;
+            const blob = new Blob([cardHTML], { type: 'text/html' });
+
+            // Create a temporary URL and trigger download
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'profile-card.html';
+            a.click();
+        });
+    </script>
+</body>
+</html>
