@@ -23,15 +23,17 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             margin: 10px;
         }
+
         .profile-card {
+            width: 400px;
             display: flex;
-            justify-content: center;
+            flex-direction: row;
+            justify-content: 20px;
             align-items: center;
-            width: 60%;
-            height: 200px;
+            width: 50%;
             background: white;
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             margin: 20px;
         }
@@ -41,17 +43,20 @@
             object-fit: cover;
             border-radius: 50%;
         }
-        .social-icons {
+        .profile-info {
+            flex: 2;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            margin-left:auto;
+            justify-content: center;
         }
-        .social-icons a {
-            margin-bottom: 10px;
-            text-decoration: none;
+        .profile-info h2, .profile-info p {
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+            font-style: italic;
+            font-size: 24px;
             color: #333;
-            font-size: 30px;
         }
         .form-label {
             font-weight: bold;
@@ -61,7 +66,7 @@
             padding: 10px;
             margin: 5px 0;
             border: 2px solid #ccc;
-            border-radius: 4px;
+            border-radius: 4px
         }
         .form-button {
             background: #00d2d3;
@@ -99,7 +104,7 @@
                 <input class="form-input" type="email" id="emailInput" placeholder="youremail@example.com" required>
             </div>
             <div>
-                <label class="form-label" for ="caption">Caption:</label>
+                <label class="form-label" for="caption">Caption:</label>
                 <input class="form-input" type="text" id="captionInput" placeholder="Your Caption" required>
             </div>
             <div>
@@ -131,19 +136,15 @@
             <h2 id="name">Your Name</h2>
             <p id="email">youremail@example.com</p>
             <p id="caption">Your Caption</p>
-        </div>
-        <div class="social-icons">
-            <a id="instagramLink" href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a id="twitterLink" href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-            <a id="githubLink" href="#" title="GitHub"><i class="fab fa-github"></i></a>
-            <a id="portfolioLink" href="#" title="Portfolio"><i class="fas fa-globe"></i></a>
-            <a id="linkedinLink" href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <p id="instagramUsername">Instagram: Your Username</p>
+            <p id="twitterUsername">Twitter: Your Username</p>
+            <p id="githubUsername">GitHub: Your Username</p>
+            <p id="portfolioUsername">Portfolio: Your Username</p>
+            <p id="linkedinUsername">LinkedIn: Your Username</p>
         </div>
     </div>
-        <div class="btn-download">
+    <div class="btn-download">
         <button class="download-button" id="downloadImage">Download as Image</button>
-        <button class="download-button" id="downloadCard">Download Card</button>
-        <button class="download-button" id="downloadFrame">Download Frame Code</button>
     </div><br><br>
     <footer style="text-align: center; font-size: small; margin-top: 20px;">
         Crafted with love for you ❤️
@@ -158,21 +159,19 @@
             const instagramUsername = document.getElementById('instagramInput').value;
             const twitterUsername = document.getElementById('twitterInput').value;
             const githubUsername = document.getElementById('githubInput').value;
-            const portfolioURL = document.getElementById('portfolioInput').value;
+            const portfolioUsername = document.getElementById('portfolioInput').value;
             const linkedinUsername = document.getElementById('linkedinInput').value;
-
+    
             // Update the card content
             document.getElementById('name').textContent = name;
             document.getElementById('email').textContent = email;
             document.getElementById('caption').textContent = caption;
-
-            // Update social media links
-            document.getElementById('instagramLink').href = `https://www.instagram.com/${instagramUsername}`;
-            document.getElementById('twitterLink').href = `https://twitter.com/${twitterUsername}`;
-            document.getElementById('githubLink').href = `https://github.com/${githubUsername}`;
-            document.getElementById('portfolioLink').href = portfolioURL;
-            document.getElementById('linkedinLink').href = `https://www.linkedin.com/in/${linkedinUsername}`;
-
+            document.getElementById('instagramUsername').textContent = `Instagram: ${instagramUsername}`;
+            document.getElementById('twitterUsername').textContent = `Twitter: ${twitterUsername}`;
+            document.getElementById('githubUsername').textContent = `GitHub: ${githubUsername}`;
+            document.getElementById('portfolioUsername').textContent = `Portfolio: ${portfolioUsername}`;
+            document.getElementById('linkedinUsername').textContent = `LinkedIn: ${linkedinUsername}`;
+    
             // Update profile picture (if a file was selected)
             const photoInput = document.getElementById('photo');
             if (photoInput.files && photoInput.files[0]) {
@@ -182,88 +181,22 @@
                 };
                 reader.readAsDataURL(photoInput.files[0]);
             }
-
-            // Change the card background color
-            const card = document.querySelector('.profile-card');
-            card.style.background = getRandomGradient();
         }
-
-        // Generate a random gradient background
-        function getRandomGradient() {
-            const gradientColors = [
-                '#00d2d3, #3a7bd5',
-                '#ff6a88, #56ab2f',
-                '#f6d365, #fda085',
-                '#92fe9d, #00c9ff',
-                '#fc00ff, #00dbde',
-            ];
-            return `linear-gradient(to right, ${gradientColors[Math.floor(Math.random() * gradientColors.length)]})`;
+    
+        // Function to download the card as an image
+        function downloadCardAsImage() {
+            const profileCard = document.querySelector('.profile-card');
+            html2canvas(profileCard).then(function(canvas) {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = 'profile-card.png';
+                link.click();
+            });
         }
-
-        // Initial update
-        updateCard();
-
-        // Update card when the button is clicked
-        const updateCardButton = document.getElementById('updateCardButton');
-        updateCardButton.addEventListener('click', updateCard);
-
-        // Download as Image
-        const downloadImageButton = document.getElementById('downloadImage');
-        downloadImageButton.addEventListener('click', () => {
-            const card = document.querySelector('.profile-card');
-            const cardImage = card.cloneNode(true);
-            cardImage.style.width = cardImage.style.height = '100%';
-            const cardImageContainer = document.createElement('div');
-            cardImageContainer.appendChild(cardImage);
-            const cardHTML = cardImageContainer.innerHTML;
-            downloadAsImage(cardHTML);
-        });
-
-        // Download Card as HTML
-        const downloadCardButton = document.getElementById('downloadCard');
-        downloadCardButton.addEventListener('click', () => {
-            const card = document.querySelector('.profile-card');
-            const cardHTML = card.outerHTML;
-            downloadAsHTML(cardHTML, 'profile-card.html');
-        });
-
-        // Download Frame Code as HTML
-        const downloadFrameButton = document.getElementById('downloadFrame');
-        downloadFrameButton.addEventListener('click', () => {
-            const frameHTML = `<html>${document.head.outerHTML}${document.body.outerHTML}</html>`;
-            downloadAsHTML(frameHTML, 'frame-code.html');
-        });
-
-        // Function to download content as an image
-        function downloadAsImage(content) {
-            const canvas = document.createElement('canvas');
-            const image = new Image();
-
-            image.onload = function () {
-                canvas.width = image.width;
-                canvas.height = image.height;
-                const context = canvas.getContext('2d');
-                context.drawImage(image, 0, 0);
-
-                const a = document.createElement('a');
-                a.href = canvas.toDataURL('image/png');
-                a.download = 'profile-card.png';
-                a.click();
-            };
-
-            image.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(content)));
-        }
-
-        // Function to download content as HTML
-        function downloadAsHTML(content, filename) {
-            const blob = new Blob([content], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-        }
+    
+        // Add event listeners to the buttons
+        document.getElementById('updateCardButton').addEventListener('click', updateCard);
+        document.getElementById('downloadImage').addEventListener('click', downloadCardAsImage);
     </script>
 </body>
 </html>
