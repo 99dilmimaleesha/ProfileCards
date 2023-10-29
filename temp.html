@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <title>Profile Card Builder</title>
     <style>
         body {
@@ -23,8 +24,10 @@
             margin: 10px;
         }
         .profile-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             width: 600px;
-            height: 300px;
             background: white;
             border-radius: 8px;
             padding: 20px;
@@ -32,10 +35,10 @@
             margin: 20px;
         }
         .profile-pic {
-            width: 100%;
+            width: 200px;
             height: 200px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 50%;
         }
         .social-icons {
             display: flex;
@@ -102,7 +105,7 @@
             </div>
             <div>
                 <label class="form-label" for="twitter">Twitter Username:</label>
-                <input class ="form-input" type="text" id="twitterInput" placeholder="Your Twitter Username" required>
+                <input class="form-input" type="text" id="twitterInput" placeholder="Your Twitter Username" required>
             </div>
             <div>
                 <label class="form-label" for="github">GitHub Username:</label>
@@ -121,22 +124,23 @@
     </div>
     <div class="profile-card">
         <img class="profile-pic" id="profilePic" src="default-profile-pic.jpg" alt="Profile Picture">
-        <h2 id="name">Your Name</h2>
-        <p id="email">youremail@example.com</p>
-        <p id="caption">Your Caption</p>
+        <div class="profile-info">
+            <h2 id="name">Your Name</h2>
+            <p id="email">youremail@example.com</p>
+            <p id="caption">Your Caption</p>
+        </div>
         <div class="social-icons">
-            <a id="instagramLink" href="#"><i class="fab fa-instagram"></i></a>
-            <a id="twitterLink" href="#"><i class="fab fa-twitter"></i></a>
-            <a id="githubLink" href="#"><i class="fab fa-github"></i></a>
-            <a id="portfolioLink" href="#"><i class="fas fa-globe"></i></a>
-            <a id="linkedinLink" href="#"><i class="fab fa-linkedin"></i></a>
+            <a id="instagramLink" href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a id="twitterLink" href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a id="githubLink" href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <a id="portfolioLink" href="#" title="Portfolio"><i class="fas fa-globe"></i></a>
+            <a id="linkedinLink" href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
         </div>
     </div>
-    <div class="btn-download">
+        <div class="btn-download">
         <button class="download-button" id="downloadImage">Download as Image</button>
         <button class="download-button" id="downloadCard">Download Card</button>
         <button class="download-button" id="downloadFrame">Download Frame Code</button>
-
     </div><br><br>
     <footer style="text-align: center; font-size: small; margin-top: 20px;">
         Crafted with love for you ❤️
