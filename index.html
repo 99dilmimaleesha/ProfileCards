@@ -23,15 +23,17 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             margin: 10px;
         }
+
         .profile-card {
+            width: 400px;
             display: flex;
-            justify-content: center;
+            flex-direction: row;
+            justify-content: 20px;;
             align-items: center;
-            width: 60%;
-            height: 200px;
+            width: 50%;
             background: white;
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             margin: 20px;
         }
@@ -41,11 +43,35 @@
             object-fit: cover;
             border-radius: 50%;
         }
+        .profile-info {
+            flex: 2;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .profile-info h2, .profile-info p {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 24px;
+            color: #333;
+            margin: 5px 0; /* Reduce the gap between elements */
+        }
+        .profile-info h2 {
+            font-weight: bold; /* Make the name bolder */
+            font-size: 28px; /* Increase the font size for the name */
+            font-style: normal; /* Reset the style */
+        }
+        .profile-info p {
+            font-style: italic; /* Make the caption italic */
+            font-family: 'cursive-font', cursive; /* Apply a stylish cursive handwriting font to the caption */
+        }
         .social-icons {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-left:auto;
         }
         .social-icons a {
             margin-bottom: 10px;
@@ -99,7 +125,7 @@
                 <input class="form-input" type="email" id="emailInput" placeholder="youremail@example.com" required>
             </div>
             <div>
-                <label class="form-label" for ="caption">Caption:</label>
+                <label class="form-label" for="caption">Caption:</label>
                 <input class="form-input" type="text" id="captionInput" placeholder="Your Caption" required>
             </div>
             <div>
@@ -140,7 +166,7 @@
             <a id="linkedinLink" href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
         </div>
     </div>
-        <div class="btn-download">
+    <div class="btn-download">
         <button class="download-button" id="downloadImage">Download as Image</button>
         <button class="download-button" id="downloadCard">Download Card</button>
         <button class="download-button" id="downloadFrame">Download Frame Code</button>
@@ -227,12 +253,55 @@
             downloadAsHTML(cardHTML, 'profile-card.html');
         });
 
-        // Download Frame Code as HTML
-        const downloadFrameButton = document.getElementById('downloadFrame');
-        downloadFrameButton.addEventListener('click', () => {
-            const frameHTML = `<html>${document.head.outerHTML}${document.body.outerHTML}</html>`;
-            downloadAsHTML(frameHTML, 'frame-code.html');
-        });
+// Function to generate iframe code for the banner
+function generateIframeCode() {
+    const iframeContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+            <style>
+                /* Your CSS styles for the banner */
+                body {
+                    /* Add your styles for the iframe body here */
+                }
+                .profile-card {
+                    /* Add your styles for the profile card here */
+                }
+                /* Add other styles for your banner content */
+            </style>
+        </head>
+        <body>
+            <div class="profile-card">
+                <img class="profile-pic" src="default-profile-pic.jpg" alt="Profile Picture">
+                <div class="profile-info">
+                    <h2>Your Name</h2>
+                    <p>youremail@example.com</p>
+                    <p>Your Caption</p>
+                </div>
+            </div>
+        </body>
+        </html>
+    `;
+
+    // Create a Blob containing the iframe content
+    const iframeBlob = new Blob([iframeContent], { type: 'text/html' });
+
+    // Create a URL for the Blob
+    const iframeURL = URL.createObjectURL(iframeBlob);
+
+    // Create a link element to trigger the download
+    const iframeLink = document.createElement('a');
+    iframeLink.href = iframeURL;
+    iframeLink.download = 'profile-banner.html';
+
+    // Trigger a click event on the link to start the download
+    iframeLink.click();
+}
+
+// Add an event listener to the "Download Frame Code" button
+const downloadFrameButton = document.getElementById('downloadFrame');
+downloadFrameButton.addEventListener('click', generateIframeCode);
 
         // Function to download content as an image
         function downloadAsImage(content) {
